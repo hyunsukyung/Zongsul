@@ -1,0 +1,271 @@
+:root {
+  --primary: #4a6ed8;
+  --text-gray: #555;
+  --border: #ddd;
+  --bg: #f9f9fb;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html, #root {
+  height: 100%;
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+  background: var(--bg);
+}
+
+/* 상단바 */
+.header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border);
+  font-weight: 700;
+  font-size: 20px;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* 메인 */
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 40px 32px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  text-align: center;
+  width: 350px;
+}
+
+.card h2 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.card p {
+  color: var(--text-gray);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+label {
+  display: block;
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+button {
+  width: 100%;
+  padding: 12px 0;
+  background: var(--primary);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button:hover {
+  background: #3a59b8;
+}
+
+/* 하단바 */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background: #eeeeee;
+  padding: 0;
+  border-top: 1px solid #ccc;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.footer button {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-gray);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.footer button.active {
+  color: var(--primary);
+  border-top: 3px solid var(--primary);
+}
+
+.login-box,
+.admin-box {
+  background: white;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 30px;
+  width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* 로그인 입력창 */
+.login-box input {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  outline: none;
+}
+
+.login-box input:focus {
+  border-color: #1976d2; /* 파란색 */
+}
+
+/* 로그인 버튼 */
+.login-box button {
+  width: 100%;
+  padding: 10px;
+  background-color: #1976d2; /* 파란색 */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-box button:hover {
+  background-color: #1565c0; /* hover 시 진한 파랑 */
+}
+
+/* 관리자 버튼 */
+.admin-box button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1976d2; /* 파란색 */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.admin-box button:hover {
+  background-color: #1565c0; /* hover 시 진한 파랑 */
+}
+
+.week-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.week-bar {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* 요일 간 간격 */
+  margin-bottom: 40px;
+}
+
+.main-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 90%;          /* 🔹 전체 화면의 90%만 사용 */
+  max-width: 500px;    /* 🔹 최대 폭 제한 */
+  margin: 20px auto;      /* 🔹 중앙 정렬 */
+  margin-botton: 100px;
+  padding: 20px;
+  padding-bottom: 100px;
+
+  gap: 15px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* 점선 정사각형 요일 박스 */
+.day-box {
+  width: 60px;
+  height: 60px;
+  border: 2px dashed #1976d2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #1976d2;
+  font-weight: 600;
+  border-radius: 8px;
+  font-size: 18px;
+  background-color: white;
+}
+
+.analyze-btn {
+  padding: 12px 40px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background 0.3s;
+}
+
+.analyze-btn:hover {
+  background-color: #1565c0;
+}
+
+.upload-container {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.upload-container input[type="file"] {
+  margin: 20px 0;
+}
+
+.back-btn {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  background-color: #0056b3;
+}
+
