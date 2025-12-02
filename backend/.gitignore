@@ -1,42 +1,101 @@
-HELP.md
+#######################################
+# General
+#######################################
+*.class
+*.log
+*.lock
+*.tmp
+*.swp
+*.bak
+
+#######################################
+# OS generated files
+#######################################
+.DS_Store
+Thumbs.db
+
+#######################################
+# IntelliJ IDEA
+#######################################
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+#######################################
+# VS Code
+#######################################
+.vscode/
+
+#######################################
+# Gradle
+#######################################
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+#######################################
+# Java / Maven
+#######################################
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+#######################################
+# Spring Boot (중요!)
+#######################################
+# 절대 깃허브에 올리면 안 되는 민감파일
+src/main/resources/application.properties
+src/main/resources/application.yml
+*.properties
+*.yml
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+#######################################
+# AWS credentials (빼야 함)
+#######################################
+# SSH 키 / AWS 키 / PEM 파일 보호
+*.pem
+*.key
+*.pub
+*.aws
+aws/
+**/credentials
+**/config
 
-### VS Code ###
-.vscode/
+#######################################
+# Environment Files
+#######################################
+.env
+*.env
 
-# Elastic Beanstalk Files
+#######################################
+# Elastic Beanstalk
+#######################################
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+#######################################
+# Logs (EB, NGX, Spring)
+#######################################
+logs/
+*.log
+*.out
+spring.log
+nohup.out
+
+#######################################
+# Nginx
+#######################################
+.platform/nginx/logs/
+.platform/nginx/conf.d/
+
+#######################################
+# AWS Lambda / AI Models (추천)
+#######################################
+*.pt
+*.pth
