@@ -1,5 +1,6 @@
 package com.zongsul.backend.service;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -10,6 +11,7 @@ import java.util.*;
  * - 나중에 진짜 FastAPI 연동할 거면 HttpInferenceClient를 만들고 Bean 교체하면 됨
  */
 @Service
+@ConditionalOnProperty(name = "inference.mode", havingValue = "fake", matchIfMissing = true)
 public class FakeInferenceClient implements InferenceClient {
 
     private final Random random = new Random();

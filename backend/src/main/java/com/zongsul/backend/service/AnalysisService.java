@@ -1,5 +1,7 @@
 package com.zongsul.backend.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,6 +11,8 @@ import java.util.*;
 @Service
 public class AnalysisService {
 
+    private static final Logger log = LoggerFactory.getLogger(AnalysisService.class);
+
     private final InferenceClient inferenceClient;
     private FridayAnalysisResult latestFridayResult;
 
@@ -17,6 +21,8 @@ public class AnalysisService {
     }
 
     public void analyzeFridayImages(List<MultipartFile> images) throws IOException {
+
+        log.info("[Analysis] Start Friday images analysis. imageCount={}", images != null ? images.size() : 0);
 
         Map<String, Double> sum = new HashMap<>();
         int count = images.size();
@@ -52,6 +58,8 @@ public class AnalysisService {
         List<String> related = relatedMap.getOrDefault(least, List.of());
 
         latestFridayResult = new FridayAnalysisResult(avg, least, related);
+
+        log.info("[Analysis] Finished Friday analysis. winner={}, avg={}, related={}", least, avg, related);
     }
 
     public FridayAnalysisResult getLatestResult() {
