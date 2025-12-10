@@ -10,12 +10,17 @@ import java.util.*;
 public class AnalysisService {
 
     private final InferenceClient inferenceClient;
+
+    // 가장 최근 분석 결과 저장
     private FridayAnalysisResult latestFridayResult;
 
     public AnalysisService(InferenceClient inferenceClient) {
         this.inferenceClient = inferenceClient;
     }
 
+    // -------------------------------
+    // 1) 금요일 이미지 분석
+    // -------------------------------
     public void analyzeFridayImages(List<MultipartFile> images) throws IOException {
 
         Map<String, Double> sum = new HashMap<>();
@@ -32,17 +37,20 @@ public class AnalysisService {
             }
         }
 
+        // 평균 계산
         Map<String, Double> avg = new HashMap<>();
         for (String key : sum.keySet()) {
             avg.put(key, sum.get(key) / count);
         }
 
+        // 가장 적게 남은 반찬 찾기 (값이 *큰* 것이 많이 남았다는 뜻이라면 반대로 해야 함)
         String least = avg.entrySet()
                 .stream()
                 .max(Comparator.comparingDouble(Map.Entry::getValue))
                 .map(Map.Entry::getKey)
                 .orElse("없음");
 
+        // 추천 매핑
         Map<String, List<String>> relatedMap = Map.of(
                 "계란찜", List.of("두부조림", "야채무침"),
                 "김자반", List.of("멸치볶음", "콩나물무침"),
@@ -51,13 +59,17 @@ public class AnalysisService {
 
         List<String> related = relatedMap.getOrDefault(least, List.of());
 
+        // 결과 저장
         latestFridayResult = new FridayAnalysisResult(avg, least, related);
     }
 
+    // -------------------------------
+    // 2) 최근 분석 결과 가져오기
+    // -------------------------------
     public FridayAnalysisResult getLatestResult() {
         if (latestFridayResult == null) {
             return new FridayAnalysisResult(
-                    Map.of("계란찜", 0.3, "김자반", 0.3, "시금치", 0.3),
+                    Map.of("계란찜", 0.0, "김자반", 0.0, "시금치", 0.0),
                     "계란찜",
                     List.of("두부조림")
             );

@@ -256,47 +256,42 @@ public class MenuRecommendationService {
     public List<MenuRecommendation> generateNextWeekWithForcedSides(Map<String, String> forcedSides) {
 
         LocalDate weekStart = targetWeekStartDate();
-        List<MenuRecommendation> out = new ArrayList<>();
 
-        Random r = new Random();
+        // 1) 이번에 제안했던 "다음주 식단표"를 요일 순으로 DB에서 가져오기
+        List<MenuRecommendation> menus = repo.findByWeekStartDateOrderByDayOfWeekAsc(weekStart);
 
-        List<String> ricePool = menuProvider.getRiceList();
-        List<String> soupPool = menuProvider.getSoupList();
-        List<String> mainPool = menuProvider.getMainDishList();
-        List<String> namulPool = menuProvider.getNamulList();
+        // 2) 만약 아직 생성된 데이터가 없다면 먼저 생성 후 다시 조회
+        if (menus.isEmpty()) {
+            generateForWeek(weekStart);
+            menus = repo.findByWeekStartDateOrderByDayOfWeekAsc(weekStart);
+        }
 
-        for (int i = 0; i < 5; i++) {
-            String key = switch (i) {
-                case 0 -> "mon";
-                case 1 -> "tue";
-                case 2 -> "wed";
-                case 3 -> "thu";
-                default -> "fri";
+        // 3) 서브 반찬(side1)만 대체 반영
+        for (MenuRecommendation mr : menus) {
+
+            String key = switch (mr.getDayOfWeek()) {
+                case 1 -> "mon";
+                case 2 -> "tue";
+                case 3 -> "wed";
+                case 4 -> "thu";
+                case 5 -> "fri";
+                default -> null;
             };
+
+            if (key == null) continue;
 
             String forcedSide = forcedSides.get(key);
 
-            MenuRecommendation mr = new MenuRecommendation();
-            mr.setWeekStartDate(weekStart);
-            mr.setDayOfWeek(i + 1); // Monday = 1, ..., Friday = 5
-
-            mr.setRice(ricePool.get(r.nextInt(ricePool.size())));
-            mr.setSoup(soupPool.get(r.nextInt(soupPool.size())));
-            mr.setMain(mainPool.get(r.nextInt(mainPool.size())));
-
-            // ⭐ 중요: 강제 서브반찬 적용
-            mr.setSide1(forcedSide);
-
-            // 나물은 랜덤
-            mr.setSide2(namulPool.get(r.nextInt(namulPool.size())));
-
-            mr.setNotes("generated-with-forced-sides");
-            out.add(mr);
+            if (forcedSide != null && !forcedSide.isBlank()) {
+                mr.setSide1(forcedSide);          // ⭐ 기존 메뉴의 side1만 변경
+                mr.setNotes("generated-with-forced-sides");
+            }
         }
 
-        repo.saveAll(out);
-        return out;
+        // 4) 반영된 결과를 DB에 저장 후 리턴
+        return repo.saveAll(menus);
     }
+
 
 
 }

@@ -9,7 +9,7 @@ import java.util.*;
  * - 계란찜 / 김자반 / 시금치에 대해 랜덤 값 생성
  * - 나중에 진짜 FastAPI 연동할 거면 HttpInferenceClient를 만들고 Bean 교체하면 됨
  */
-@Service
+//@Service
 public class FakeInferenceClient implements InferenceClient {
 
     private final Random random = new Random();
